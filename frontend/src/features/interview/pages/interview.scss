@@ -1,0 +1,387 @@
+// ─── Design Tokens (Synced with home.scss) ───────────────────────────────────
+// Learning note: these variables are design tokens used throughout the report page.
+$font: "Inter", system-ui, -apple-system, sans-serif;
+$bg-base: #0a0a0b;
+$bg-card: rgba(255, 255, 255, 0.03);
+$accent: #e1034d;
+$accent-soft: rgba(225, 3, 77, 0.12);
+$text-1: #fafafa;
+$text-2: #a0a0a8;
+$text-3: #55555e;
+$border: rgba(255, 255, 255, 0.06);
+$radius-lg: 20px;
+$radius-md: 12px;
+$ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+// ─── Layout ──────────────────────────────────────────────────────────────────
+
+// Learning note: this block creates the full-screen report page background.
+.interview-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: $bg-base;
+  overflow: hidden;
+  font-family: $font;
+}
+
+// Learning note: this block creates the main three-column glass layout.
+.interview-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  display: flex;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+// ─── Left Sidebar (Nav) ──────────────────────────────────────────────────────
+
+// Learning note: this block styles the left sidebar where users switch tabs.
+.interview-sidebar {
+  width: 300px;
+  border-right: 1px solid $border;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.interview-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+// Learning note: this block styles each clickable report tab in the sidebar.
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  color: $text-2;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s $ease;
+  text-align: left;
+
+  svg:first-of-type {
+    transition: transform 0.3s $ease;
+  }
+
+  svg:last-of-type {
+    margin-left: auto;
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: all 0.3s $ease;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: $text-1;
+    
+    svg:last-of-type {
+      opacity: 0.5;
+      transform: translateX(0);
+    }
+  }
+
+  &--active {
+    background: $accent-soft;
+    border-color: rgba(225, 3, 77, 0.2);
+    color: $accent;
+
+    svg:first-of-type {
+      color: $accent;
+    }
+
+    svg:last-of-type {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+// Learning note: this block styles the report ID, match score, and sign-out area.
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border;
+  font-size: 0.75rem;
+  color: $text-3;
+  letter-spacing: 0.05em;
+}
+
+// ─── Center Column (Main Content) ────────────────────────────────────────────
+
+// Learning note: this block styles the center area that displays selected tab content.
+.interview-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; // Fixes flexbox overflow
+  background: rgba(255, 255, 255, 0.005);
+}
+
+// Learning note: this block makes the center content scroll when questions are long.
+.content-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 3rem;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 10px;
+  }
+}
+
+.content-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: $text-1;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.03em;
+}
+
+// Learning note: this block styles each generated interview question card.
+.question-card {
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeIn 0.5s $ease forwards;
+
+  .question-index {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $accent;
+  }
+
+  .question-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: $text-1;
+  }
+
+  .answer-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid $border;
+    border-radius: $radius-md;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .answer-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: $text-3;
+      text-transform: uppercase;
+    }
+
+    .answer-text {
+      font-size: 1rem;
+      color: $text-2;
+      line-height: 1.7;
+    }
+  }
+}
+
+// ─── Roadmap Styling ─────────────────────────────────────────────────────────
+
+// Learning note: this block stacks the preparation roadmap items vertically.
+.roadmap-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+// Learning note: this block draws one day in the preparation plan timeline.
+.roadmap-item {
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 7.5px;
+    top: 15px;
+    bottom: 0;
+    width: 1px;
+    background: $border;
+  }
+
+  &:last-child::before {
+    display: none;
+  }
+
+  .roadmap-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: $bg-base;
+    border: 3px solid $text-3;
+    z-index: 1;
+    margin-top: 0.25rem;
+    transition: all 0.3s $ease;
+  }
+
+  .roadmap-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .roadmap-step {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $text-1;
+  }
+
+  .roadmap-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $text-3;
+  }
+
+  &--completed {
+    .roadmap-dot { border-color: #22c55e; background: #22c55e; }
+    .roadmap-status { color: #22c55e; }
+  }
+
+  &--in-progress {
+    .roadmap-dot { border-color: $accent; }
+    .roadmap-status { color: $accent; }
+  }
+}
+
+// ─── Right Column (Skill Gaps) ────────────────────────────────────────────────
+
+// Learning note: this block styles the right panel that lists skill gaps.
+.interview-gaps {
+  width: 320px;
+  border-left: 1px solid $border;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.gaps-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $text-1;
+  margin-bottom: 0.5rem;
+}
+
+.gaps-subtitle {
+  font-size: 0.85rem;
+  color: $text-3;
+  line-height: 1.5;
+}
+
+.gaps-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+// Learning note: this block styles one skill-gap pill.
+.gap-tag {
+  padding: 0.6rem 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border;
+  border-radius: 999px;
+  color: $text-2;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s $ease;
+
+  &:hover {
+    background: $accent-soft;
+    border-color: rgba(225, 3, 77, 0.3);
+    color: $accent;
+    transform: translateY(-2px);
+  }
+}
+
+// Learning note: this block styles the advice box below the skill gaps.
+.gaps-cta {
+  margin-top: auto;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .cta-icon {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: $text-2;
+    line-height: 1.6;
+  }
+}
+
+// Learning note: this animation gently fades question cards into view.
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Learning note: this media query hides the side gap panel on narrower screens.
+@media (max-width: 1100px) {
+  .interview-gaps {
+    display: none;
+  }
+}
+
+// Learning note: this media query stacks the report layout on phone-sized screens.
+@media (max-width: 800px) {
+  .interview-container {
+    flex-direction: column;
+  }
+  .interview-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid $border;
+  }
+  .interview-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  .nav-item {
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,73 @@
+@use "./styles/button.scss";
+
+/* This global reset removes browser default spacing so every page starts consistently. */
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+
+/* This block gives the app its base dark theme and default font. */
+html,
+body,
+#root {
+  width: 100%;
+  background-color: #161616;
+  color: whitesmoke;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+/* This utility class colors important inline text with the brand accent. */
+.highlight{
+  color:#d20d3b
+}
+
+/* This fixed overlay adds a subtle texture on top of pages that include it. */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px;
+}
+
+/* These ambient classes create soft background light effects behind page content. */
+.ambient {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(120px);
+}
+
+.ambient--primary {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  right: -150px;
+  background: radial-gradient(circle, rgba(225, 3, 77, 0.12), transparent 70%);
+  animation: ambient-drift 12s ease-in-out infinite;
+}
+
+.ambient--secondary {
+  width: 500px;
+  height: 500px;
+  bottom: -180px;
+  left: -120px;
+  background: radial-gradient(circle, rgba(80, 80, 255, 0.06), transparent 70%);
+  animation: ambient-drift 16s ease-in-out infinite reverse;
+}
+
+/* This animation slowly moves the ambient background lights. */
+@keyframes ambient-drift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(15px, -20px);
+  }
+}

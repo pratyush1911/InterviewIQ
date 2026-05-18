@@ -1,0 +1,104 @@
+/* This block styles the full login/register page and centers the form on screen. */
+.auth-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* This block controls the vertical form layout and spacing. */
+  .form-container {
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* This block stacks the form fields from top to bottom. */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* This block styles each label/input pair. */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    input {
+      border: none;
+      outline: none;
+      padding-inline: 1rem;
+      padding-block: 0.75rem;
+      border-radius: 0.75rem;
+    }
+  }
+
+  /* This block styles the links between login and register pages. */
+  a{
+    color : #e1034d;
+    text-decoration : none;
+
+  }
+
+  /* This block styles error messages shown after failed auth requests. */
+  .form-error {
+    color: #e1034d;
+    font-size: 0.9rem;
+  }
+
+  /* This block styles the Google sign-in button. */
+  .oauth-button {
+    min-height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.85rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+
+    &:hover {
+      border-color: rgba(225, 3, 77, 0.35);
+      background: rgba(225, 3, 77, 0.1);
+    }
+
+    &__mark {
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #161616;
+      font-weight: 800;
+    }
+  }
+
+  /* This block draws the "or" separator between Google and email login. */
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+
+    &::before,
+    &::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+}

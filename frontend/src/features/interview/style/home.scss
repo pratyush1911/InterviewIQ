@@ -1,0 +1,444 @@
+// ─── Modules ─────────────────────────────────────────────────────────────────
+// Learning note: this module lets SCSS adjust colors in hover states.
+@use "sass:color";
+
+// ─── Font Import ─────────────────────────────────────────────────────────────
+// Learning note: this imports the Inter font used on the resume-prep page.
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+// ─── Tokens ──────────────────────────────────────────────────────────────────
+// Learning note: variables store repeated design values so colors and spacing stay consistent.
+$font: "Inter", system-ui, -apple-system, sans-serif;
+
+$bg-base: #0a0a0b;
+$bg-card: rgba(255, 255, 255, 0.03);
+$bg-input: rgba(255, 255, 255, 0.04);
+$bg-input-hover: rgba(255, 255, 255, 0.06);
+
+$accent: #e1034d;
+$accent-soft: rgba(225, 3, 77, 0.12);
+$accent-glow: rgba(225, 3, 77, 0.08);
+
+$text-1: #fafafa;
+$text-2: #a0a0a8;
+$text-3: #55555e;
+
+$border: rgba(255, 255, 255, 0.06);
+$border-hover: rgba(255, 255, 255, 0.1);
+$border-focus: rgba(225, 3, 77, 0.4);
+
+$radius: 12px;
+$radius-lg: 20px;
+
+$ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+// ─── Noise Overlay ───────────────────────────────────────────────────────────
+// Learning note: this class adds subtle texture over the dark page background.
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px;
+}
+
+// ─── Ambient Gradients ───────────────────────────────────────────────────────
+// Learning note: these blurred circles create the soft background glow.
+.ambient {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(120px);
+
+  &--primary {
+    width: 600px;
+    height: 600px;
+    top: -200px;
+    right: -150px;
+    background: radial-gradient(circle, rgba(225, 3, 77, 0.12), transparent 70%);
+    animation: drift 12s ease-in-out infinite;
+  }
+
+  &--secondary {
+    width: 500px;
+    height: 500px;
+    bottom: -180px;
+    left: -120px;
+    background: radial-gradient(circle, rgba(80, 80, 255, 0.06), transparent 70%);
+    animation: drift 16s ease-in-out infinite reverse;
+  }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(15px, -20px); }
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
+// Learning note: this block positions the full resume-prep page.
+.interview-home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 5vh 1.5rem 6rem;
+  font-family: $font;
+  -webkit-font-smoothing: antialiased;
+}
+
+.interview-home__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.home-topbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+// ─── Hero ────────────────────────────────────────────────────────────────────
+// Learning note: this block styles the headline above the upload form.
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 2rem;
+
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid $accent-soft;
+    background: $accent-soft;
+    color: $accent;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+
+    svg {
+      opacity: 0.7;
+    }
+  }
+
+  &__heading {
+    font-size: clamp(2.5rem, 6.5vw, 4rem); // Increased
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: $text-1;
+
+    &--gradient {
+      background: linear-gradient(135deg, $accent 0%, #ff6b8a 50%, #c084fc 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &__sub {
+    max-width: 500px;
+    font-size: 1.15rem;   // Increased from 0.95rem
+    font-weight: 400;
+    color: $text-2;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ─── Form Card ───────────────────────────────────────────────────────────────
+// Learning note: this block creates the two-column glass form card.
+.form-card {
+  display: flex;
+  align-items: stretch;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.03) inset,
+    0 40px 80px -20px rgba(0, 0, 0, 0.6);
+
+  &__section {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  &__divider {
+    width: 1px;
+    background: $border;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__divider-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: $text-3;
+    border: 2px solid $bg-base;
+  }
+}
+
+// ─── Section Label ───────────────────────────────────────────────────────────
+// Learning note: labels explain each input area and align icons with text.
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: $text-1;
+  font-size: 1rem;       // Increased from 0.82rem
+  font-weight: 700;       // Increased to 700
+  letter-spacing: -0.02em;
+
+  svg {
+    color: $accent;       // Changed to accent for more visibility
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  &__hint {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: $text-3;
+    letter-spacing: 0;
+  }
+
+  &--mt {
+    margin-top: 1.5rem;   // Increased spacing
+  }
+}
+
+// ─── Input / Textarea ────────────────────────────────────────────────────────
+// Learning note: this block styles textareas used for job and profile text.
+.input-area {
+  width: 100%;
+  flex: 1;
+  min-height: 200px;
+  padding: 1.25rem;       // Increased padding
+  border-radius: $radius;
+  border: 1px solid $border;
+  background: $bg-input;
+  color: $text-1;
+  font-family: $font;
+  font-size: 1rem;        // Increased from 0.85rem
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s $ease, background 0.2s $ease, box-shadow 0.2s $ease;
+
+  &::placeholder {
+    color: $text-3;
+  }
+
+  &:hover {
+    background: $bg-input-hover;
+    border-color: $border-hover;
+  }
+
+  &:focus {
+    border-color: $border-focus;
+    background: $bg-input-hover;
+    box-shadow: 0 0 0 3px $accent-soft;
+  }
+
+  &--short {
+    min-height: 100px;
+    flex: unset;
+  }
+}
+
+// ─── Dropzone ────────────────────────────────────────────────────────────────
+// Learning note: this block styles the drag-and-drop resume upload area.
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.4rem 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: $radius;
+  background: $bg-input;
+  cursor: pointer;
+  transition: all 0.25s $ease;
+
+  &:hover {
+    border-color: $border-hover;
+    background: $bg-input-hover;
+  }
+
+  &--active {
+    border-color: $accent;
+    background: $accent-soft;
+    border-style: solid;
+  }
+
+  &--done {
+    border-style: solid;
+    border-color: rgba(52, 211, 153, 0.3);
+    background: rgba(52, 211, 153, 0.04);
+  }
+
+  &__idle {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: $text-2;
+    font-size: 1rem;       // Increased from 0.82rem
+
+    svg {
+      color: $text-3;
+      width: 24px;        // Larger icon
+      height: 24px;
+    }
+  }
+
+  &__browse {
+    color: $accent;
+    font-weight: 700;     // Bolder
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+
+    .dropzone:hover & {
+      border-color: $accent;
+    }
+  }
+
+  &__success {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  &__check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;          // Larger success circle
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(52, 211, 153, 0.12);
+    color: #34d399;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__filename {
+    font-size: 0.95rem;   // Larger filename
+    font-weight: 600;
+    color: #34d399;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// ─── CTA Button ──────────────────────────────────────────────────────────────
+// Learning note: this block styles the button that starts AI generation.
+.cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.5rem;   // Increased padding
+  margin-top: auto;
+  border: none;
+  border-radius: $radius;
+  background: $accent;
+  color: #fff;
+  font-family: $font;
+  font-size: 1.1rem;      // Increased from 0.85rem
+  font-weight: 700;       // Bolder
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s $ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+    pointer-events: none;
+  }
+
+  svg {
+    transition: transform 0.3s $ease;
+  }
+
+  &:hover {
+    background: color.adjust($accent, $lightness: 4%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(225, 3, 77, 0.3);
+
+    svg {
+      transform: translateX(3px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: none;
+  }
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+// Learning note: this block styles the small privacy note below the form.
+.footer-note {
+  text-align: center;
+  font-size: 0.72rem;
+  color: $text-3;
+  letter-spacing: 0.01em;
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+// Learning note: this media query stacks the form on small screens.
+@media (max-width: 720px) {
+  .interview-home {
+    padding: 3vh 1rem 4rem;
+  }
+
+  .form-card {
+    flex-direction: column;
+
+    &__divider {
+      width: 100%;
+      height: 1px;
+    }
+
+    &__divider-dot {
+      display: none;
+    }
+  }
+
+  .hero__heading {
+    font-size: 2rem;
+  }
+}

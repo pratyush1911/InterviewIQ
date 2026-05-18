@@ -1,0 +1,154 @@
+/* This block styles the full dashboard page background and spacing. */
+.dashboard-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem;
+  overflow: hidden;
+  background: #0a0a0b;
+}
+
+/* This block limits dashboard content width so it stays readable on large screens. */
+.dashboard-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* This block arranges the greeting and sign-out button. */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+
+  h1 {
+    max-width: 780px;
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+    line-height: 0.96;
+    letter-spacing: 0;
+    color: #fafafa;
+  }
+}
+
+/* This block styles small uppercase labels used across the dashboard. */
+.dashboard-eyebrow,
+.dashboard-card__label {
+  color: #e1034d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* This block creates the dashboard card grid. */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1rem;
+}
+
+/* This block gives cards and panels their glass-like surfaces. */
+.dashboard-card,
+.dashboard-panel {
+  min-height: 260px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #fafafa;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+/* This block turns dashboard cards into clickable navigation buttons. */
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(225, 3, 77, 0.38);
+    background: rgba(225, 3, 77, 0.07);
+  }
+
+  strong {
+    margin-top: 1rem;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  &--primary {
+    min-height: 360px;
+    grid-row: span 2;
+  }
+}
+
+/* This block styles the numbered circle on each dashboard card. */
+.dashboard-card__icon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: auto;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(225, 3, 77, 0.12);
+  color: #ff6b8a;
+  font-weight: 800;
+}
+
+/* This block styles the small action text at the bottom of dashboard cards. */
+.dashboard-card__action {
+  margin-top: 1.5rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-weight: 700;
+}
+
+/* This block styles the informational readiness panel. */
+.dashboard-panel {
+  min-height: auto;
+
+  ul {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    list-style: none;
+  }
+
+  li {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(225, 3, 77, 0.45);
+  }
+}
+
+/* This block changes the dashboard layout for tablet and phone screens. */
+@media (max-width: 820px) {
+  .dashboard-page {
+    padding: 1rem;
+  }
+
+  .dashboard-shell {
+    padding: 1rem 0;
+  }
+
+  .dashboard-header,
+  .dashboard-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard-card,
+  .dashboard-card--primary {
+    min-height: 250px;
+  }
+}

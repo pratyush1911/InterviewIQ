@@ -1,0 +1,353 @@
+/* This block styles the full live interview page background and spacing. */
+.live-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 1.5rem;
+  overflow: hidden;
+  background: #0a0a0b;
+}
+
+/* This block keeps live interview content centered and readable. */
+.live-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+/* This block arranges the back and sign-out buttons at the top. */
+.live-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* This block styles the back-to-dashboard button. */
+.ghost-nav {
+  min-height: 40px;
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* This block styles the heading area above the interview panels. */
+.live-hero {
+  max-width: 760px;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin-top: 0.5rem;
+    color: #fafafa;
+    font-size: clamp(2.3rem, 6vw, 4.7rem);
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+
+  p {
+    max-width: 640px;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+}
+
+/* This block styles the small uppercase label above the live interview title. */
+.live-eyebrow {
+  color: #e1034d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* This block creates the two-column interview layout. */
+.live-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 1rem;
+}
+
+/* This shared block gives panels their glass-card appearance. */
+.interviewer-card,
+.answer-card,
+.feedback-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #fafafa;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+}
+
+/* This block styles the left interviewer/question panel. */
+.interviewer-card {
+  min-height: 520px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin-top: auto;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+}
+
+/* This block draws the glowing interviewer orb. */
+.interviewer-orb {
+  width: 148px;
+  height: 148px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(225, 3, 77, 0.5), transparent 45%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent 70%);
+  box-shadow: 0 0 70px rgba(225, 3, 77, 0.22);
+
+  span {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #e1034d;
+    box-shadow: 0 0 38px rgba(225, 3, 77, 0.7);
+  }
+}
+
+/* This block styles the question count and editable target role input. */
+.question-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  input {
+    width: min(220px, 50%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    padding: 0.55rem 0.85rem;
+    outline: none;
+  }
+}
+
+/* This block lays out the voice and microphone buttons. */
+.live-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+/* This block styles action buttons used across the live interview page. */
+.live-button {
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.85rem;
+  background: #e1034d;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: #f20d59;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+    transform: none;
+  }
+
+  &--secondary {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &--danger {
+    background: rgba(255, 77, 77, 0.7);
+  }
+
+  &--wide {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+/* This block styles the answer transcript panel. */
+.answer-card {
+  padding: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 360px;
+    resize: vertical;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.045);
+    color: #fafafa;
+    font: inherit;
+    line-height: 1.6;
+    outline: none;
+  }
+}
+
+/* This block styles error messages on the live interview page. */
+.live-error {
+  margin-top: 0.75rem;
+  color: #ff6b8a;
+  font-weight: 700;
+}
+
+/* This block arranges scored answer cards after answers are submitted. */
+.feedback-strip {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+/* This block styles one scored-answer feedback card. */
+.feedback-card {
+  padding: 1rem;
+
+  span {
+    color: #e1034d;
+    font-weight: 800;
+  }
+
+  strong {
+    display: block;
+    margin: 0.5rem 0;
+    font-size: 1.6rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.66);
+    line-height: 1.5;
+  }
+}
+
+/* This block styles the final selected/not-selected decision panel. */
+.decision-panel {
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.55;
+  }
+}
+
+/* This block styles the final decision status badge. */
+.decision-badge {
+  align-self: flex-start;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 77, 77, 0.12);
+  color: #ff8a8a;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  &.is-selected {
+    background: rgba(52, 211, 153, 0.12);
+    color: #34d399;
+  }
+}
+
+/* This block styles the circular confidence score display. */
+.score-ring {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  align-self: flex-start;
+  border: 1px solid rgba(225, 3, 77, 0.45);
+  background: rgba(225, 3, 77, 0.1);
+
+  strong {
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+
+  span {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+}
+
+/* This block creates two columns for hiring signals and next steps. */
+.decision-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  h3 {
+    margin-bottom: 0.6rem;
+    color: #fafafa;
+  }
+}
+
+/* This block stacks the live interview layout on smaller screens. */
+@media (max-width: 860px) {
+  .live-page {
+    padding: 1rem;
+  }
+
+  .live-layout,
+  .decision-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .interviewer-card {
+    min-height: 420px;
+  }
+
+  .live-header {
+    flex-direction: column;
+  }
+}
