@@ -9,7 +9,7 @@ const { isGoogleOAuthConfigured } = require("../config/passport");
 const authCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 // This is the frontend URL used when the backend redirects after Google login.
