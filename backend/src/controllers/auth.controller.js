@@ -190,10 +190,22 @@ async function logoutUserController(req, res) {
 // This controller returns the currently logged-in user's public profile.
 async function getMeController(req, res) {
   try {
-    // req.user was added by auth.middleware.js after verifying the cookie.
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        msg: "Unauthorized",
+      });
+    }
+
     const user = await userModel.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({
+        msg: "User not found",
+      });
+    }
+
     res.status(200).json({
-      msg: "User details Fetched Successfully",
+      msg: "User details fetched successfully",
       user: {
         id: user._id,
         username: user.username,
@@ -201,8 +213,10 @@ async function getMeController(req, res) {
       },
     });
   } catch (err) {
-    // This block catches unexpected profile lookup errors.
-    res.status(500).json({ msg: "Internal server error" });
+    console.error("getMeController error:", err);
+    res.status(500).json({
+      msg: "Internal server error",
+    });
   }
 }
 
