@@ -8,8 +8,7 @@ const fallbackHost =
 // This block builds the base backend URL.
 // You can override it with VITE_API_BASE_URL when deploying.
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? `http://${fallbackHost}:3000`;
-
+  import.meta.env.VITE_API_BASE_URL || `http://${fallbackHost}:3000`;
 // This block creates one reusable Axios client for all API calls.
 // withCredentials sends and receives the auth cookie used by the backend.
 const api = axios.create({
