@@ -152,36 +152,49 @@ function parseJsonResponse(text) {
 async function generateStructuredContent({ prompt, responseSchema }) {
   let lastError;
 
-  // This block tries each model until one succeeds.
   for (const modelName of MODEL_FALLBACKS) {
-    try {
-      // This block configures Gemini to answer as JSON instead of normal prose.
-      const model = genAI.getGenerativeModel(
-        {
-          model: modelName,
-          generationConfig: {
-            responseMimeType: "application/json",
-            responseSchema,
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const model = genAI.getGenerativeModel(
+          {
+            model: modelName,
+            generationConfig: {
+              responseMimeType: "application/json",
+              responseSchema,
+            },
           },
-        },
-        { apiVersion: "v1beta" },
-      );
+          { apiVersion: "v1beta" },
+        );
 
-      // This block runs the model, reads its text, and parses it into an object.
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      return parseJsonResponse(response.text());
-    } catch (err) {
-      // This block remembers the failure and tries the next fallback model.
-      lastError = err;
-      console.warn(`${modelName} failed: ${err.message}`);
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+
+        return parseJsonResponse(response.text());
+      } catch (err) {
+        lastError = err;
+
+        const isRetryable =
+          err.status === 503 ||
+          err.message?.includes("503") ||
+          err.message?.includes("high demand") ||
+          err.message?.includes("Service Unavailable");
+
+        console.warn(
+          `${modelName} failed (attempt ${attempt}/3): ${err.message}`,
+        );
+
+        if (isRetryable && attempt < 3) {
+          await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
+          continue;
+        }
+
+        break;
+      }
     }
   }
 
-  // If every model failed, this line throws the last error to the controller.
   throw lastError;
 }
-
 // This function powers the resume/job-description report feature.
 async function generateInterviewReport({
   resume,
