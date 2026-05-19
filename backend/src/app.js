@@ -35,7 +35,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.options("/.*/", cors(corsOptions));
 
 const authRouter = require("./routes/auth.route");
 const interviewRouter = require("./routes/interview.routes");
